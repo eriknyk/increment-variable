@@ -1,49 +1,74 @@
-# android-get-app-version-action
+Increment Variable
+===
 
-A Github Action to get the android app versionCode and versionName from AndroidManifest file, additionally it returns next versionCode.
+***(!) This is a modified version of https://github.com/action-pack/increment
+this version will return `new value` and `old value` of the variable.***
 
-### Usage
+Action to increment a repository variable. Useful for increasing a version number for example.
 
-```Dockerfile
-name: Bump version
-on:
-  push:
-    branches:
-      - master
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: '0'
-    
-    - name: Get app version
-      id: get_version
-      uses: eriknyk/android-get-app-version-action@v1.0.1
-    
-    - name: Create Release (Other action that uses app versionCode & versionName)
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: '${{ steps.get_version.outputs.versionName }}-${{ steps.get_version.outputs.nextVersionCode }}'
-        release_name: 'Release ${{ steps.get_version.outputs.versionName }}-${{ steps.get_version.outputs.nextVersionCode }}'
-        draft: false
-        prerelease: false
+It also supports alphanumeric variables, for example `ABC1` will be increased to `ABC2`.
+
+If the target variable does not exist, it will be automaticly created.
+
+If you want to increment by another amount than the default (1), you can set the ```amount``` parameter.
+
+## Usage
+
+```YAML
+uses: action-pack/increment@v2
+with:
+  name: 'MY_VARIABLE'
+  token: ${{ secrets.REPO_ACCESS_TOKEN }}
 ```
+
+## Inputs
+
+### name
+
+**Required** `String` Variable name.
+
+### amount
+
+**Optional** `Integer` Increment by this amount (default = 1).
+
+### token
+
+**Required** `String` Repository [Access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
+
+### owner
+
+**Optional** `String` Owners name.
+
+### repository
+
+**Optional** `String` Repository name.
+
+### org
+
+**Optional** `Boolean` Indicates the repo is an [organization](https://docs.github.com/en/github/setting-up-and-managing-organizations-and-teams/about-organizations).
 
 ## Outputs
 
-### `versionName`
+### old_value
 
-The **versionName** value from AndroidManifest.xml
+`Integer|empty` The value prioud being updated. Returns empty if the variable doesn't exist previously.
 
-### `versionCode` 
-  
-The **versionCode** value from AndroidManifest.xml
+### new_value
 
-###  `nextVersionCode`
+`Integer` The new value after variable incremented
+
+## FAQ
+
+  * ### Why do I get the error '*Resource not accessible by integration*'?
+
+    This will happen if you use ```secrets.GITHUB_TOKEN```.
+
+    You need to create a [personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) instead.
+
+    Go to your Github settings, select 'Developer settings' --> 'Personal access tokens' --> 'Tokens (classic)' and create a new token. Store its value in a secret, for example ```MY_TOKEN```.
+
+    Then refer to it like this:
     
-The **Next versionCode** value, since it is an integer value it will contains the respective `versionCode + 1`  value.
+    ```yaml
+    token: ${{ secrets.MY_TOKEN }}
+    ```

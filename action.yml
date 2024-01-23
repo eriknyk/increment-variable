@@ -1,21 +1,42 @@
-name: 'Github get android app version'
-description: 'get android app versionName and versionCode from AndroidManifest file'
+name: 'Increment a variable value'
+description: 'Increment a variable value +1 by default'
 author: 'Erik Amaru Ortiz'
 inputs:
-  manifestPath:
-    description: "AndroidManifest file path"
+  name:
+    description: Name
     required: true
-    default: "./AndroidManifest.xml"
+
+  amount:
+    description: Amount
+    default: 1
+    required: false
+
+  repository:
+    description: Repository name
+    default: false
+    required: false
+
+  owner:
+    description: Repository owner
+    default: false
+    required: false
+
+  org:
+    description: Flag for organization
+    default: false
+    required: false
+
+  token:
+    description: Repository access token
+    required: true
 runs:
-  using: "node12"
+  using: "node20"
   main: "index.js"
 outputs:
-  versionName:
-    description: 'Version Name'
-  versionCode:
-    description: 'Version Code'
-  nextVersionCode:
-    description: 'Next Version Code'
+  old_value:
+    description: 'The old value prioud being updated'
+  new_value:
+    description: 'The new value after update'
 branding:
   color: 'blue'
   icon: 'anchor'
