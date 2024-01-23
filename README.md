@@ -15,10 +15,20 @@ If you want to increment by another amount than the default (1), you can set the
 ## Usage
 
 ```YAML
-uses: action-pack/increment@v2
-with:
-  name: 'MY_VARIABLE'
-  token: ${{ secrets.REPO_ACCESS_TOKEN }}
+- uses: eriknyk/increment-variable@v1.0.0
+  with:
+    id: version_code
+    name: 'VERSION_CODE'
+    token: ${{ secrets.REPO_ACCESS_TOKEN }}
+```
+
+Then you can use it in following steps like:
+
+```YAML
+- name: Set app info
+  run: |
+    echo "APP_VERSION=2.1.44-${{ steps.version_code.outputs.new_value }}" >> $GITHUB_ENV
+    echo "PREV_VERSION=2.1.44-${{ steps.version_code.outputs.old_value }}" >> $GITHUB_ENV
 ```
 
 ## Inputs
