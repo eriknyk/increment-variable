@@ -1,6 +1,11 @@
 name: 'Increment a variable value'
 description: 'Increment a variable value +1 by default'
 author: 'Erik Amaru Ortiz'
+
+branding:
+  color: 'blue'
+  icon: 'anchor'
+
 inputs:
   name:
     description: Name
@@ -29,14 +34,13 @@ inputs:
   token:
     description: Repository access token
     required: true
-runs:
-  using: "node20"
-  main: "index.js"
+
 outputs:
   old_value:
     description: 'The old value prioud being updated'
   new_value:
     description: 'The new value after update'
-branding:
-  color: 'blue'
-  icon: 'anchor'
+
+runs:
+  using: "node20"
+  main: "index.js"
