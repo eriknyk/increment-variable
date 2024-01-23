@@ -15,7 +15,7 @@ If you want to increment by another amount than the default (1), you can set the
 ## Usage
 
 ```YAML
-- uses: eriknyk/increment-variable@v1.0.0
+- uses: eriknyk/increment-variable@v1.0.3
   with:
     id: version_code
     name: 'VERSION_CODE'
