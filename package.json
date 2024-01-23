@@ -1,6 +1,6 @@
 {
-    "name": "increment-value",
-    "version": "1.0.1",
+    "name": "increment-variable",
+    "version": "1.0.2",
     "description": "Increment a variable",
     "main": "index.js",
     "scripts": {
